@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cumpleaños de Kimba • Pijamada Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#ff6fa3; --pink-2:#ff9fc0; --straw:#e83e5a; --leaf:#35c48b; --ink:#51263a; --gold:#ffcf6e;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink);
+      font-family:"Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: linear-gradient(180deg,#fff,#ffe9f3 60%,#ffd8ea);
+    }
+
+    /* ------------ FRESITAS ANIMADAS (detrás de todo) ------------ */
+    .floaters{
+      position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;
+    }
+    .berry{
+      position:absolute; width:64px; aspect-ratio:1/1;
+      animation:floatUp linear infinite, sway ease-in-out infinite;
+      filter:drop-shadow(0 6px 6px rgba(0,0,0,.12));
+      opacity:.9;
+    }
+    @keyframes floatUp{ from{transform:translateY(110vh) rotate(-10deg)} to{transform:translateY(-20vh) rotate(10deg)} }
+    @keyframes sway{ from{margin-left:-10px} to{margin-left:10px} }
+    @media (max-width:520px){ .berry{ width:44px } }
+
+    /* ------------------- LAYOUT PRINCIPAL ------------------- */
+    .header{
+      position:sticky; top:0; z-index:3000;
+      display:grid; gap:8px; justify-items:center; text-align:center;
+      padding:14px 12px;
+      background:linear-gradient(90deg,var(--pink),var(--pink-2)); color:#fff;
+      box-shadow:0 6px 16px rgba(255,111,163,.25);
+    }
+    .brand{display:flex; align-items:center; gap:10px}
+    .logo{width:44px; height:44px; object-fit:contain}
+    .title{font-family:"Pacifico",cursive; font-size:clamp(20px,5vw,32px); line-height:1.1}
+    .ribbon{display:inline-flex; align-items:center; gap:10px; font-weight:700; background:rgba(255,255,255,.2);
+      padding:8px 12px; border-radius:999px}
+
+    .card{position:relative; z-index:100; width:min(920px,100%); margin:0 auto; background:#fff; box-shadow:0 10px 40px rgba(255,111,163,.2)}
+    @media (min-width:521px){ .card{border-radius:24px; margin:16px auto} }
+
+    .content{padding:18px}
+    .hero{display:grid; gap:12px; justify-items:center; text-align:center}
+    .frame{
+      width:min(520px, 92vw);
+      background:linear-gradient(#fff,#fff) padding-box,
+                 radial-gradient(120% 120% at 20% 0%, #ffd8ea, #ffeef6) border-box;
+      border:8px solid transparent; border-radius:22px; padding:12px;
+      box-shadow:0 10px 28px rgba(255,111,163,.2);
+    }
+    .big-rosita{width:100%; height:auto; display:block}
+
+    /* ------------------- COUNTDOWN ------------------- */
+    .countdown{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:8px 0 2px}
+    .cd-box{min-width:70px; padding:10px 12px; text-align:center; border-radius:14px;
+      border:1px solid rgba(255,111,163,.35);
+      background:linear-gradient(180deg,#fff,#fff7fb)}
+    .cd-box span{display:block; font-weight:800; font-size:clamp(20px,6vw,30px)}
+    .cd-box small{opacity:.75; font-weight:700}
+
+    /* ------------------- DETALLES ------------------- */
+    .details{display:grid; gap:14px; grid-template-columns:1fr}
+    @media (min-width:681px){ .details{grid-template-columns:repeat(3,1fr)} }
+    .detail{display:grid; gap:6px; padding:14px; border-radius:16px;
+      background:linear-gradient(180deg,#fff,#fff7fb); border:1px dashed rgba(255,111,163,.35)}
+    .detail h3{margin:0; font-size:14px; text-transform:uppercase; letter-spacing:.7px; color:#b02d54}
+    .detail p{margin:0; font-weight:700}
+
+    .note{background:#fff; border:1px solid #ffe0ee; border-radius:16px; padding:14px; font-size:15px; margin-top:10px}
+    .list{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width:520px){ .list{grid-template-columns:1fr} }
+
+    .cta{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; padding-top:10px}
+    .btn{appearance:none; border:none; border-radius:999px; padding:12px 16px; font-weight:800; cursor:pointer}
+    .btn.primary{background:linear-gradient(180deg,var(--straw),#d92d55); color:#fff; box-shadow:0 10px 20px rgba(232,62,90,.35)}
+    .btn.secondary{background:linear-gradient(180deg,#fff,#fff1f6); color:var(--straw); border:2px solid #ff9fc0}
+    .btn:active{transform:translateY(1px)}
+
+    .footer{padding:14px 16px; background:linear-gradient(90deg,#ffe6f1,#fff); font-size:14px; display:flex; justify-content:space-between; gap:12px}
+    .footer small{opacity:.8}
+    @media (max-width:520px){ .footer{flex-direction:column; align-items:flex-start} }
+  </style>
+</head>
+<body>
+
+  <!-- Símbolo SVG reutilizable (fresa) -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <g id="strawberry">
+        <path d="M32 6c6 0 12 4 14 9 1 3-1 6-2 9-3 7-7 13-12 18-4-5-9-11-12-18-1-3-3-6-2-9 2-5 8-9 14-9Z" fill="var(--straw)"/>
+        <circle cx="23" cy="17" r="2" fill="#ffd8ea"/>
+        <circle cx="29" cy="22" r="2" fill="#ffd8ea"/>
+        <circle cx="36" cy="18" r="2" fill="#ffd8ea"/>
+        <path d="M32 3c-4 0-7 3-8 6 2 1 6 1 8-1 2 2 6 2 8 1-1-3-4-6-8-6Z" fill="var(--leaf)"/>
+        <path d="M29 8l3-4 3 4" stroke="#1f7a59" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- Capa de fresitas animadas -->
+  <div class="floaters" aria-hidden="true">
+    <svg class="berry" style="left:4vw;  animation-duration:16s,3.4s; animation-delay:0s,.2s"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <svg class="berry" style="left:18vw; width:76px; animation-duration:18s,3.8s; animation-delay:1s,.6s; opacity:.75"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <svg class="berry" style="left:32vw; width:54px; animation-duration:14s,3.2s; animation-delay:.4s,.1s"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <svg class="berry" style="left:50vw; width:70px; animation-duration:19s,3.6s; animation-delay:1.2s,.3s"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <svg class="berry" style="left:66vw; width:62px; animation-duration:17s,3.2s; animation-delay:.8s,.2s; opacity:.85"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <svg class="berry" style="left:82vw; width:64px; animation-duration:16s,3.4s; animation-delay:.2s,.5s"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <!-- extras para móvil -->
+    <svg class="berry" style="left:8vw; width:48px; animation-duration:20s,3.5s; animation-delay:.6s,.2s"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+    <svg class="berry" style="left:90vw; width:48px; animation-duration:21s,3.7s; animation-delay:1.1s,.4s"><use href="#strawberry" xlink:href="#strawberry"></use></svg>
+  </div>
+
+  <!-- Header sticky (fuera de la tarjeta para que siempre se vea) -->
+  <header class="header" role="banner">
+    <div class="brand">
+      <div class="title">Cumpleaños de Kimba de Rosita Fresita</div>
+    </div>
+    <div class="ribbon"><span><strong>¡Estás invitad@ porque tkm!</strong></span></div>
+  </header>
+
+  <!-- Tarjeta / contenido -->
+  <main class="card" role="region" aria-label="Invitación Pijamada Real">
+    <section class="content">
+      <div class="hero">
+        <div class="frame">
+          <img class="big-rosita" src="https://i.imgur.com/B2v58bV.png" alt="Rosita Fresita">
+        </div>
+
+        <!-- Contador -->
+        <div class="countdown" role="timer" aria-live="polite" aria-label="Cuenta regresiva al 25 de octubre">
+          <div class="cd-box"><span id="cd-d">--</span><small>días</small></div>
+          <div class="cd-box"><span id="cd-h">--</span><small>horas</small></div>
+          <div class="cd-box"><span id="cd-m">--</span><small>min</small></div>
+          <div class="cd-box"><span id="cd-s">--</span><small>seg</small></div>
+        </div>
+      </div>
+
+      <div class="details" aria-label="Detalles del evento">
+        <div class="detail">
+          <h3>Cuándo</h3>
+          <p>Sábado <strong>25 de octubre de 2025</strong><br> Desde la mañana – hasta el desayuno del 26 🍓</p>
+        </div>
+        <div class="detail">
+          <h3>Dónde</h3>
+          <p><span id="direccion">Herradura – Casa de Sha</span></p>
+        </div>
+        <div class="detail">
+          <h3>Dress Code</h3>
+          <p>Vestido de baño y pijama ✨</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>¿Qué traer?</strong>
+        <ul class="list">
+          <li>Cobijita</li>
+          <li>Almohada y peluche favorito</li>
+          <li>Sandalias/ pantuflas</li>
+          <li>Lo que te vas a tomar 🍓</li>
+        </ul>
+      </div>
+
+      <div class="cta">
+        <button class="btn primary" onclick="addToCalendar()">Añadir al calendario</button>
+        <!-- Enlace directo (más fiable en móvil) -->
+        <a class="btn secondary" href="https://chat.whatsapp.com/IDZMTxAQcWcLdiviOXnfNM" target="_blank" rel="noopener">
+          Llenar la encuesta de WhatsApp
+        </a>
+        <button class="btn secondary" onclick="window.print()">Imprimir</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>Completa la encuesta para confirmar 💗</small>
+      <small>Hecho con amor y 🍓</small>
+    </footer>
+  </main>
+
+  <script>
+    // ---------- Calendario (.ics) ----------
+    function addToCalendar(){
+      const dtStart = '20251025T090000';
+      const dtEnd   = '20251026T100000';
+      const title = 'Pijamada Real – Cumpleaños de Kimba de Rosita Fresita';
+      const location = (document.getElementById('direccion')?.textContent || 'Herradura – Casa de Sha');
+      const description = 'Fiesta desde la mañana. Trae cobijita, almohada y peluche favorito.';
+      const dtstamp = new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/, 'Z');
+      const uid = 'pijamada-real-25oct-rosita-' + Date.now() + '@invitacion';
+      const ics = [
+        'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invitacion Rosita Fresita//ES','BEGIN:VEVENT',
+        'UID:' + uid,'DTSTAMP:' + dtstamp,
+        'DTSTART;TZID=America/Costa_Rica:' + dtStart,
+        'DTEND;TZID=America/Costa_Rica:' + dtEnd,
+        'SUMMARY:' + title,'LOCATION:' + location,'DESCRIPTION:' + description,
+        'END:VEVENT','END:VCALENDAR'
+      ].join('\r\n');
+      const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'pijamada-real-25oct.ics';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    // ---------- Contador (CR −06:00) robusto en móvil ----------
+    (function startCountdown(){
+      // 25 Oct 2025 09:00 (Costa Rica -06:00) = 15:00 UTC
+      const targetUTC = Date.UTC(2025, 9, 25, 15, 0, 0); // mes 9 = octubre
+      const dEl = document.getElementById('cd-d');
+      const hEl = document.getElementById('cd-h');
+      const mEl = document.getElementById('cd-m');
+      const sEl = document.getElementById('cd-s');
+
+      function tick(){
+        const nowUTC = Date.now();
+        let diff = Math.max(0, targetUTC - nowUTC);
+        const d = Math.floor(diff / 86400000); diff -= d*86400000;
+        const h = Math.floor(diff / 3600000);  diff -= h*3600000;
+        const m = Math.floor(diff / 60000);    diff -= m*60000;
+        const s = Math.floor(diff / 1000);
+        dEl.textContent = String(d);
+        hEl.textContent = String(h).padStart(2,'0');
+        mEl.textContent = String(m).padStart(2,'0');
+        sEl.textContent = String(s).padStart(2,'0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
